@@ -55,7 +55,8 @@ namespace Laba3_Var9
     {
         class ArgumentAndFunction
         {
-
+            double argument;
+            double function;
         }
         public static double CalculateArctangens(double xStart, double xEnd, int step, double accuracy)
         {
