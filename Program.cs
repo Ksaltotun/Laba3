@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Laba3_Var9
 {
@@ -45,7 +46,6 @@ namespace Laba3_Var9
             {
                 Console.WriteLine(e);
             }
-
             Console.WriteLine($"Вы ввели x = {x}, результат y = {y}");
             return y;
         }
@@ -57,10 +57,33 @@ namespace Laba3_Var9
         {
             double argument;
             double function;
+            public ArgumentAndFunction(double x, double y) { argument = x; function = y; }
         }
         public static double CalculateArctangens(double xStart, double xEnd, int step, double accuracy)
         {
-            
+            double currentValue = xStart;
+            double valuePrev;
+            double valueNext;
+            List<ArgumentAndFunction> resultCollection = new List<ArgumentAndFunction>();
+            while (currentValue <= xEnd)
+            {
+                valuePrev = Math.Pow(currentValue, 3);
+                valueNext = valuePrev;
+                for (int i = 2; ; i++)
+                {
+                    valueNext += Math.Pow(currentValue, 2 * i + 1) * Math.Pow(-1, i) / (2 * i + 1);
+                    if (Math.Abs(valuePrev - valueNext) <= accuracy)
+                    {
+                        resultCollection.Add(new ArgumentAndFunction(currentValue, valueNext));
+                        break;
+                    }
+                    if (i > 200)
+                    {
+                        Console.WriteLine("More than 200");
+                        return 0;
+                    }
+                }
+            }
             return 0;
         }
     }
