@@ -55,34 +55,53 @@ namespace Laba3_Var9
     {
         class ArgumentAndFunction
         {
-            double argument;
-            double function;
-            public ArgumentAndFunction(double x, double y) { argument = x; function = y; }
+            public double argument;
+            public double function;
+            public int stepCount;
+            public double functionAuto;
+            public ArgumentAndFunction(double x, double y, int i, double fA) { argument = x; function = y; stepCount = i; functionAuto = fA; }
         }
-        public static double CalculateArctangens(double xStart, double xEnd, int step, double accuracy)
+        public static double CalculateArctangens(double xStart, double xEnd, double step, double accuracy)
         {
             double currentValue = xStart;
-            double valuePrev;
+            
             double valueNext;
+            double functionAuto;
             List<ArgumentAndFunction> resultCollection = new List<ArgumentAndFunction>();
             while (currentValue <= xEnd)
             {
-                valuePrev = Math.Pow(currentValue, 3);
-                valueNext = valuePrev;
-                for (int i = 2; ; i++)
+                double valuePrev = currentValue;
+                for (int i = 1; ; i++)
                 {
-                    valueNext += Math.Pow(currentValue, 2 * i + 1) * Math.Pow(-1, i) / (2 * i + 1);
+                    valueNext = valuePrev + Math.Pow(currentValue, 2 * i + 1) * Math.Pow(-1, i) / (2 * i + 1);
                     if (Math.Abs(valuePrev - valueNext) <= accuracy)
                     {
-                        resultCollection.Add(new ArgumentAndFunction(currentValue, valueNext));
+                        functionAuto = Math.Atan(currentValue);
+                        resultCollection.Add(new ArgumentAndFunction(currentValue, valueNext, i, functionAuto));
                         break;
+                    } else
+                     {
+                        valuePrev = valueNext;
                     }
                     if (i > 200)
                     {
+                        
                         Console.WriteLine("More than 200");
                         return 0;
                     }
                 }
+                currentValue += step;
+            }
+            foreach (ArgumentAndFunction i in resultCollection)
+            {
+                Console.Write(i.argument);
+                Console.Write(" ---- ");
+                Console.Write(i.function);
+                Console.Write(" ---- ");
+                Console.Write(i.stepCount);
+                Console.Write(" ---- ");
+                Console.Write(i.functionAuto);
+                Console.WriteLine("");
             }
             return 0;
         }
@@ -92,7 +111,8 @@ namespace Laba3_Var9
     {
         static void Main(string[] args)
         {
-            Laba3PartOne.CalValue(-1);
+            //Laba3PartOne.CalValue(-1);
+            Laba3PartTwo.CalculateArctangens(-0.99, 0.99, 0.01, 0.01);
         }
     }
 }
