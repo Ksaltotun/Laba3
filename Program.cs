@@ -64,14 +64,14 @@ namespace Laba3_Var9
         private static void PrintTable(List<ArgumentAndFunction> resultTable, double accuracy)
         {
             string[] accuracyString = accuracy.ToString().Split(',');
-            int accuracyCapacity = accuracyString[1].Length;
-            string formatString = "{0, 5:f" + accuracyCapacity.ToString() + "}";
+           ;
+            Console.WriteLine("аргумент   значение   шагов   Math.atan");
             foreach (ArgumentAndFunction i in resultTable)
             {
                 Console.Write(String.Format("{0, 7 :0.000}", i.argument));
-                Console.Write(String.Format("{0, 7 :0.000}", i.function));
+                Console.Write(String.Format("{0, 10 :0.000}", i.function));
                 Console.Write(String.Format("{0, 7 :0.}", i.stepCount));
-                Console.Write(String.Format("{0, 7 :0.000}", i.functionAuto));
+                Console.Write(String.Format("{0, 12 :0.000}", i.functionAuto));
                 Console.WriteLine();
             }
         }
