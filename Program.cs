@@ -40,7 +40,6 @@ namespace Laba3_Var9
                 {
                     throw new OutOfRangeX("Извените за мат, но х не может быть меньше -9 или больше 7");
                 }
-
             } 
             catch (Exception e)
             {
@@ -61,10 +60,24 @@ namespace Laba3_Var9
             public double functionAuto;
             public ArgumentAndFunction(double x, double y, int i, double fA) { argument = x; function = y; stepCount = i; functionAuto = fA; }
         }
+
+        private static void PrintTable(List<ArgumentAndFunction> resultTable, double accuracy)
+        {
+            string[] accuracyString = accuracy.ToString().Split(',');
+            int accuracyCapacity = accuracyString[1].Length;
+            string formatString = "{0, 5:f" + accuracyCapacity.ToString() + "}";
+            foreach (ArgumentAndFunction i in resultTable)
+            {
+                Console.Write(String.Format("{0, 7 :0.000}", i.argument));
+                Console.Write(String.Format("{0, 7 :0.000}", i.function));
+                Console.Write(String.Format("{0, 7 :0.}", i.stepCount));
+                Console.Write(String.Format("{0, 7 :0.000}", i.functionAuto));
+                Console.WriteLine();
+            }
+        }
         public static double CalculateArctangens(double xStart, double xEnd, double step, double accuracy)
         {
             double currentValue = xStart;
-            
             double valueNext;
             double functionAuto;
             List<ArgumentAndFunction> resultCollection = new List<ArgumentAndFunction>();
@@ -82,27 +95,16 @@ namespace Laba3_Var9
                     } else
                      {
                         valuePrev = valueNext;
-                    }
+                     }
                     if (i > 200)
                     {
-                        
                         Console.WriteLine("More than 200");
                         return 0;
                     }
                 }
                 currentValue += step;
             }
-            foreach (ArgumentAndFunction i in resultCollection)
-            {
-                Console.Write(i.argument);
-                Console.Write(" ---- ");
-                Console.Write(i.function);
-                Console.Write(" ---- ");
-                Console.Write(i.stepCount);
-                Console.Write(" ---- ");
-                Console.Write(i.functionAuto);
-                Console.WriteLine("");
-            }
+            PrintTable(resultCollection, accuracy);
             return 0;
         }
     }
